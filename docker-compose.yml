@@ -1,0 +1,8 @@
+services:
+  website:
+    build: .
+    container_name: karthik-reddynew
+    ports:
+      - "7000:8000"
+    volumes:
+      - .:/app

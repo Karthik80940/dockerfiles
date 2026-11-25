@@ -1,8 +1,16 @@
 services:
-  website:
+  day14:
+    container_name: karthik-reddyday14
     build: .
-    container_name: karthik-reddynew
     ports:
-      - "7000:8000"
+      - "7000:${PORT}"
     volumes:
       - .:/app
+      - mydata:/app/data
+    env_file:
+      - .env
+    environment:
+      - MY_NAME=${MY_NAME}
+      - MY-CITY=${MY_CITY}
+volumes:
+  mydata:

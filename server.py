@@ -1,19 +1,11 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
+import os
+from http.server import SimpleHTTPRequestHandler, HTTPServer
 
-class Handler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        # Only allow homepage
-        if self.path == "/" or self.path == "/index.html":
-            with open("index.html", "rb") as f:
-                data = f.read()
-            self.send_response(200)
-            self.send_header("Content-type", "text/html")
-            self.end_headers()
-            self.wfile.write(data)
-        else:
-            # Hide all other files
-            self.send_response(404)
-            self.end_headers()
-            self.wfile.write(b"404 - Page Not Found")
+name = os.getenv("MY_NAME", "Guest")
+city = os.getenv("MY_CITY", "Unknown")
+port = int(os.getenv("PORT", "8000"))
 
-HTTPServer(("0.0.0.0", 8000), Handler).serve_forever()
+print(f"Hello {name} from {city}",flush=True)
+print(f"Server running on port {port}",flush=True)
+
+HTTPServer(("0.0.0.0", port), SimpleHTTPRequestHandler).serve_forever()

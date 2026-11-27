@@ -1,16 +1,29 @@
 services:
-  day14:
-    container_name: karthik-reddyday14
-    build: .
-    ports:
-      - "7000:${PORT}"
-    volumes:
-      - .:/app
-      - mydata:/app/data
-    env_file:
-      - .env
-    environment:
-      - MY_NAME=${MY_NAME}
-      - MY-CITY=${MY_CITY}
+   karthikweb:
+     build: .
+     ports:
+       - "7000:${PORT}"
+     volumes:
+       - .:/app
+     container_name: karthikreddy-web
+     env_file:
+       - .env
+     environment:
+       - MY_NAME=${MY_NAME}
+       - MY_CITY=${MY_CITY}
+     depends_on:
+       - database
+   database:
+     image: mysql:8
+     container_name: karthikreddy-databse
+     volumes:
+       - mydatabse:/var/lib/mysql
+     environment:
+       MYSQL_ROOT_PASSWORD: ${DB_PASSWORD}
+       MYSQL_DATABASE: ${DB_NAME}
+     ports:
+      - "3306:3306"
 volumes:
-  mydata:
+  mydatabse:
+
+          
